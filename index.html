@@ -2,23 +2,48 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://unpkg.com/beerslider/dist/BeerSlider.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 <body>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="impostazioniDropdown"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-gear"></i>&#8203;
+        </button>
+        <ul class="dropdown-menu mx-0 border-0 shadow w-220px" aria-labelledby="impostazioniDropdown">
+            <li>
+                <button class="dropdown-item d-flex gap-2 align-items-center" onclick="cambiaTema()"><i id="itemTema"
+                        class="bi bi-sun-fill"></i> Cambia tema</button>
+            </li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li>
+                <button class="dropdown-item d-flex gap-2 align-items-center text-danger" onclick="resetlocal()"><i
+                        class="bi bi-eraser-fill"></i> Elimina impostazioni</button>
+            </li>
+            <li>
+                <div class="spinner-border" onclick="easteregg()" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </li>
+        </ul>
+    </div>
     <div class="container text-center">
 
-        <div class="display-4">La terra esplode</div>
+        <div class="display-3">Il Suolo Consumato in Italia</div>
 
         <div class="container px-4 text-center">
-            <div class="row gx-5">
+            <div class="row">
                 <div class="col">
                     <div class="p-3">
-                        <div class="card" style="width: 30rem;">
+                        <div class="card" style="width: 100%;">
                             <div class="card-img-top">
                                 <div class="flourish-embed flourish-map" data-src="visualisation/17655135">
                                     <script src="https://public.flourish.studio/resources/embed.js"></script>
@@ -28,15 +53,108 @@
                     </div>
                 </div>
                 <div class="col">
+                    <div class="p-3 text-start">
+                        <p style="font-size: 23px;"> Il "suolo consumato" è l'area di terreno che è stata trasformata da
+                            usi agricoli, naturali o
+                            forestali in usi urbani o industriali. Questo fenomeno rappresenta la perdita di terreno
+                            fertile o di aree verdi a causa della crescita urbana e delle infrastrutture. In Italia,
+                            come altrove, il consumo di suolo è una preoccupazione ambientale significativa, con impatti
+                            negativi sull'ambiente, sull'agricoltura e sulla biodiversità.
+                            Possiamo notare guardando il grafico, che la percentuale di suolo consumato è aumentata del
+                            0,41% nell'arco di tempo compreso tra il 2006 e il 2022.
+                            Inoltre nella seconda infografica, che rappresenta il Suolo Consumato a livello Regionale,
+                            possiamo osservare che soprattutto nel Nord Italia (pianura) l'occupazione del suolo è
+                            maggiore delle regioni Centro-Sud, come per esempio in Lombardia, la regione italiana con
+                            maggior ettari di suolo occupati.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-100"></div>
+                <div class="col">
                     <div class="p-3">
-                        <div><iframe frameborder="0" class="juxtapose" width="100%" height="700"
-                                src="https://cdn.knightlab.com/libs/juxtapose/latest/embed/index.html?uid=4c75202a-0021-11ef-9396-d93975fe8866"></iframe>
+                        <div class="card" style="width: 100%;">
+                            <div class="card-img-top">
+                                <div class="flourish-embed flourish-chart" data-src="visualisation/17669358">
+                                    <script src="https://public.flourish.studio/resources/embed.js"></script>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="p-3">
+                        <div id="slider" class="beer-slider" data-beer-label="2021">
+                            <img src="./img/1.png" alt="">
+                            <div class="beer-reveal" data-beer-label="2019">
+                                <img src="./img/2.png" alt="">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
+        <div class="card text-center">
+            <div class="card-header">
+                Fonti e aiuti
+            </div>
+            <div class="card-body">
+           
+                <ul class="card-text list-group list-group-flush">
+                    <li class="list-group-item"><a href="https://www.isprambiente.gov.it/it">ISPRA</a></li>
+                    <li class="list-group-item"><a href="https://exelvi.github.io">Alessandro 1D</li>
+                </ul>
+           
+            </div>
+            <div class="card-footer text-body-secondary">
+                21/03/2024
+            </div>
+        </div>
     </div>
+
+    <script src="https://unpkg.com/beerslider/dist/BeerSlider.js"></script>
+    <script>
+        function cambiaTema(tipoTema) {
+            var itemTema = document.getElementById("itemTema")
+            if (!tipoTema) {
+                var temaaaStorage = localStorage.getItem('tema');
+                if (temaaaStorage != "dark") {
+                    document.body.setAttribute('data-bs-theme', "dark");
+                    itemTema.className = "bi bi-sun-fill"
+                    localStorage.setItem('tema', "dark");
+                } else {
+                    document.body.setAttribute('data-bs-theme', "light");
+                    itemTema.className = "bi bi-moon-stars-fill"
+                    localStorage.setItem('tema', "light")
+                }
+            } else if (tipoTema === 'dark' || tipoTema === 'light') {
+                document.body.setAttribute('data-bs-theme', tipoTema);
+                localStorage.setItem('tema', tipoTema);
+            }
+        }
+
+        function resetlocal() {
+            var confermaaa = window.confirm("Sei sicuro di voler eliminare tutte le impostazioni? (Questo eliminerà tutte le impostazioni salvate, compresi i salvataggi)");
+            if (confermaaa) {
+                localStorage.clear();
+                alert('LocalStorage ripristinata con successo!');
+                window.location.reload()
+            }
+        }
+
+        function easteregg() {
+            window.location.href = 'http://sonomarsoemenevanto.com/'
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            var temaSalvato = localStorage.getItem('tema');
+            if (temaSalvato) {
+                cambiaTema(temaSalvato);
+            }
+            new BeerSlider(document.getElementById("slider"))
+        })
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
